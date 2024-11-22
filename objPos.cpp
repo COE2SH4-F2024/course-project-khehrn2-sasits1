@@ -1,4 +1,5 @@
 #include "objPos.h"
+#include "MacUILib.h"
 
 objPos::objPos()
 {
@@ -19,8 +20,30 @@ objPos::objPos(int xPos, int yPos, char sym)
 // Respect the rule of six / minimum four
 // [TODO] Implement the missing special member functions to meet the minimum four rule
 
+objPos::~objPos()
+{
+    delete pos;
+}
 
+objPos::objPos(const objPos &newObj) // copy constructor
+{
+    pos = new Pos;
+    MacUILib_printf("Copy constructor called.\n");
+    pos->x= newObj.pos->x;
+    pos->y= newObj.pos->y;
+    symbol = newObj.symbol;
+}
 
+objPos& objPos::operator = (const objPos &newObj)
+{
+    if(this != &newObj)
+    {
+        this->pos->x = newObj.pos->x;
+        this->pos->y = newObj.pos->y;
+        this->symbol = newObj.symbol;
+    }
+    return *this;
+}
 
 void objPos::setObjPos(objPos o)
 {

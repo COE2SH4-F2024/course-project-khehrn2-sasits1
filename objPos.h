@@ -23,9 +23,9 @@ class objPos
         // add destructor
         ~objPos();
         // add copy constructor
-        objPos(const objPos &aList);
+        objPos(const objPos &newObj);
         // add copy assignment operator
-        objPos& operator = (const objPos &aList);
+        objPos& operator = (const objPos &newObj);
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
 
