@@ -1,14 +1,13 @@
 #include "Player.h"
 
-
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
-    myDir = STOP;
+    myDir = STOP; // default direction
 
     // more actions to be included
-    playerPos.pos->x = 5; // update this after making game mechanics class and player class "talk" to each other (aka adding myGM pointer into myPlayer object!)
-    playerPos.pos->y = 5;
+    playerPos.pos->x = mainGameMechsRef->getBoardSizeX()/ 2; // update this after making game mechanics class and player class "talk" to each other (aka adding myGM pointer into myPlayer object!)
+    playerPos.pos->y = mainGameMechsRef->getBoardSizeY()/ 2;
     playerPos.symbol = '@';
 }
 

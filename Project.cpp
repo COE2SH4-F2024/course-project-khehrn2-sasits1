@@ -3,6 +3,7 @@
 #include "objPos.h"
 
 #include "Player.h"
+#include "GameMechs.h"
 
 using namespace std;
 
@@ -11,8 +12,9 @@ using namespace std;
 #define WIDTH 20
 
 Player *myPlayer; // Global pointer meant to instantiate a player object on the heap
+GameMechs *myGM;
 
-bool exitFlag;
+// bool exitFlag; will not need this bc of GameMechs class!
 
 void Initialize(void);
 void GetInput(void);
@@ -28,7 +30,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -46,10 +48,10 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    // need to pass myGM pointer where nullptr is in myPlayer object!
-    myPlayer = new Player(nullptr); // created a player object on the heap
+    myGM = new GameMechs();
+    myPlayer = new Player(myGM); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
     
-    exitFlag = false;
+    // exitFlag = false; don't need this bc GameMechs class alr initializes it to false!
 }
 
 void GetInput(void)
@@ -118,6 +120,7 @@ void CleanUp(void)
     MacUILib_clearScreen();    
 
     delete myPlayer;
+    delete myGM;
 
     MacUILib_uninit();
 }
