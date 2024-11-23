@@ -13,16 +13,16 @@ class Player
 
     // You will include more data members and member functions to complete your design.
 
-    
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
 
-        Player(GameMechs* thisGMRef);
-        ~Player();
+        Player(GameMechs* thisGMRef); // GameMechs class is passed by reference as pointer into the Player class
+        ~Player(); // destructor, deletes heap members to prevent memory leakage.
 
         objPos getPlayerPos() const; // Upgrade this in iteration 3.       
         void updatePlayerDir();
         void movePlayer();
+        void speedControl();
 
         // More methods to be added here
 

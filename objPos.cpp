@@ -27,8 +27,11 @@ objPos::~objPos()
 
 objPos::objPos(const objPos &newObj) // copy constructor
 {
+    if(pos != nullptr)
+    {
+        delete pos;
+    }
     pos = new Pos;
-    MacUILib_printf("Copy constructor called.\n");
     pos->x= newObj.pos->x;
     pos->y= newObj.pos->y;
     symbol = newObj.symbol;
@@ -36,11 +39,16 @@ objPos::objPos(const objPos &newObj) // copy constructor
 
 objPos& objPos::operator = (const objPos &newObj)
 {
-    if(this != &newObj)
-    {
-        this->pos->x = newObj.pos->x;
-        this->pos->y = newObj.pos->y;
-        this->symbol = newObj.symbol;
+    if(this != nullptr)
+    { 
+        if(pos != nullptr) 
+        {
+            delete pos;
+        }
+        pos = new Pos;
+        pos->x = newObj.pos->x;
+        pos->y = newObj.pos->y;
+        symbol = newObj.symbol;
     }
     return *this;
 }
