@@ -6,7 +6,7 @@ Course Project
 
 You must watch the briefing video and read through the manual to engage in the development activities.
 
-Section: [C01]
+Section: [L09][L10]
 
 Team Information
 Member 1 MacID: [khehrn2]
