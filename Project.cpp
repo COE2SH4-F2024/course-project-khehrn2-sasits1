@@ -23,14 +23,12 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-
-
 int main(void)
 {
 
     Initialize();
 
-    while(myGM->getExitFlagStatus() == false)  
+    while (myGM->getExitFlagStatus() == false)
     {
         GetInput();
         RunLogic();
@@ -39,29 +37,25 @@ int main(void)
     }
 
     CleanUp();
-
 }
-
 
 void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs();
+    // myGM = new GameMechs();
     myPlayer = new Player(myGM); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
-    
+
     // exitFlag = false; don't need this bc GameMechs class alr initializes it to false!
 }
 
 void GetInput(void)
 {
-   
 }
 
 void RunLogic(void)
 {
-    
 }
 
 void DrawScreen(void)
@@ -69,21 +63,21 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     objPos playerPos = myPlayer->getPlayerPos();
-   
-    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerPos.pos->x, playerPos.pos->y, playerPos.symbol); 
 
-    for(int j = 0; j < HEIGHT; j++) // // when j is between index 0 and 8, print "#"when i is between index 0 and 19, print "#"
+    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerPos.pos->x, playerPos.pos->y, playerPos.symbol);
+
+    for (int j = 0; j < HEIGHT; j++) // // when j is between index 0 and 8, print "#"when i is between index 0 and 19, print "#"
     {
-        for(int i = 0; i < WIDTH; i++) // when i is between index 0 and 19, print "#"
+        for (int i = 0; i < WIDTH; i++) // when i is between index 0 and 19, print "#"
         {
-            //int item = 0;
-            if(i == playerPos.pos->x && j == playerPos.pos->y)
+            // int item = 0;
+            if (i == playerPos.pos->x && j == playerPos.pos->y)
             {
                 MacUILib_printf("%c", playerPos.symbol);
-                //item = 1;
-                //continue;
+                // item = 1;
+                // continue;
             }
-            // int k;   
+            // int k;
             // for(k = 0; k < 5; k++) // prints out the symbol for the random items on the board
             // {
             //     if(j == itemBin[k].y && i == itemBin[k].x)
@@ -93,19 +87,19 @@ void DrawScreen(void)
             //         break;
             //     }
             // }
-            //if(!item)
+            // if(!item)
             {
-                if(j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) 
+                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1)
                 {
-                    MacUILib_printf("%c",'#');
+                    MacUILib_printf("%c", '#');
                 }
                 else
                 {
-                    MacUILib_printf("%c",' ');
+                    MacUILib_printf("%c", ' ');
                 }
             }
         }
-        MacUILib_printf("%c",'\n');
+        MacUILib_printf("%c", '\n');
     }
 }
 
@@ -114,10 +108,9 @@ void LoopDelay(void)
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
 
-
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();
 
     delete myPlayer;
     delete myGM;
