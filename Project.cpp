@@ -69,12 +69,14 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     objPos playerPos = myPlayer->getPlayerPos();
-   
-    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerPos.pos->x, playerPos.pos->y, playerPos.symbol); 
+    int boardX = myGM->getBoardSizeX();
+    int boardY = myGM->getBoardSizeY();
 
-    for(int j = 0; j < HEIGHT; j++) // // when j is between index 0 and 8, print "#"when i is between index 0 and 19, print "#"
+    //MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerPos.pos->x, playerPos.pos->y, playerPos.symbol); 
+
+    for(int j = 0; j < boardY; j++) // // when j is between index 0 and 8, print "#"when i is between index 0 and 19, print "#"
     {
-        for(int i = 0; i < WIDTH; i++) // when i is between index 0 and 19, print "#"
+        for(int i = 0; i < boardX; i++) // when i is between index 0 and 19, print "#"
         {
             //int item = 0;
             if(i == playerPos.pos->x && j == playerPos.pos->y)
@@ -95,7 +97,7 @@ void DrawScreen(void)
             // }
             //if(!item)
             {
-                if(j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) 
+                if(j == 0 || j == boardY || i == 0 || i == boardX) 
                 {
                     MacUILib_printf("%c",'#');
                 }

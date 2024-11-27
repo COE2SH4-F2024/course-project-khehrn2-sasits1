@@ -28,7 +28,7 @@ objPos Player::getPlayerPos() const
 void Player::updatePlayerDir()
 {
     char input = mainGameMechsRef->getInput();
-    mainGameMechsRef->clearInput();
+    //mainGameMechsRef->clearInput();
 
     // PPA3 input processing logic
 
