@@ -27,9 +27,9 @@ void CleanUp(void);
 
 int main(void)
 {
-    MacUILib_printf("Before Intialize\n"); // check
+    //MacUILib_printf("Before Intialize\n"); // check
     Initialize();
-    MacUILib_printf("After Initialize\n"); // check
+    //MacUILib_printf("After Initialize\n"); // check
     while (myGM->getExitFlagStatus() == false)
     {
         GetInput();
@@ -43,11 +43,11 @@ int main(void)
 
 void Initialize(void)
 {
-    MacUILib_printf("Initialize()\n");
+    //MacUILib_printf("Initialize()\n");
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(myGM->getBoardSizeX(), myGM->getBoardSizeY());
+    myGM = new GameMechs(20,10);
     myPlayer = new Player(myGM); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
     // myArrayList = new objPosArrayList(); // will use this in future iterations
 
@@ -56,14 +56,19 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    MacUILib_printf("GetInput()\n");
+    //MacUILib_printf("GetInput()\n");
     char input = myGM->getInput();
 }
 
 void RunLogic(void)
 {
+    myPlayer->updatePlayerDir();
+    myPlayer->movePlayer();
+    //myPlayer->speedControl();
+    
+    
     char input = myGM->getInput();
-    MacUILib_printf("RunLogic()\n");
+    //MacUILib_printf("RunLogic()\n");
     if (input == ' ')
     {
         myGM->setExitTrue(); // Exit if space is pressed
@@ -72,7 +77,7 @@ void RunLogic(void)
     else if (input == 'i') // debug key? for increment
     {
         myGM->incrementScore();
-        MacUILib_printf("Score is incremented by one. Current score: %d \n", myGM->getScore());
+        //MacUILib_printf("Score is incremented by one. Current score: %d \n", myGM->getScore());
     }
 
     else if (input == '/')
@@ -86,7 +91,7 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    MacUILib_printf("DrawScreen()\n");
+    //MacUILib_printf("DrawScreen()\n");
     objPos playerPos = myPlayer->getPlayerPos();
 
     int boardWidth = myGM->getBoardSizeX();
@@ -112,22 +117,10 @@ void DrawScreen(void)
                 // item = 1;
                 // continue;
             }
-            // int k;
-            // for(k = 0; k < 5; k++) // prints out the symbol for the random items on the board
-            // {
-            //     if(j == itemBin[k].y && i == itemBin[k].x)
-            //     {
-            //         MacUILib_printf("%c", itemBin[k].symbol);
-            //         item = 1;
-            //         break;
-            //     }
-            // }
-            // if(!item){
             else
             {
                 MacUILib_printf("%c", ' ');
             }
-            //}
         }
         MacUILib_printf("%c", '\n');
     }
