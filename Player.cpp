@@ -6,8 +6,8 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP; // default direction
 
     // more actions to be included
-    playerPos.pos->x = mainGameMechsRef->getBoardSizeX()/ 2; // update this after making game mechanics class and player class "talk" to each other (aka adding myGM pointer into myPlayer object!)
-    playerPos.pos->y = mainGameMechsRef->getBoardSizeY()/ 2;
+    playerPos.pos->x = thisGMRef->getBoardSizeX()/ 2; // update this after making game mechanics class and player class "talk" to each other (aka adding myGM pointer into myPlayer object!)
+    playerPos.pos->y = thisGMRef->getBoardSizeY()/ 2;
     playerPos.symbol = '@';
 }
 
@@ -99,13 +99,13 @@ void Player::movePlayer()
             playerPos.pos->y--;
             if(playerPos.pos->y == 0)
             {
-                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 1;
+                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
             }
             break;
 
         case DOWN:
             playerPos.pos->y++;
-            if(playerPos.pos->y == mainGameMechsRef->getBoardSizeY())
+            if(playerPos.pos->y >= mainGameMechsRef->getBoardSizeY() - 1)
             {
                 playerPos.pos->y = 1;
             }
@@ -113,14 +113,14 @@ void Player::movePlayer()
 
         case LEFT:
             playerPos.pos->x--;
-            if(playerPos.pos->x == 0)
+            if(playerPos.pos->x <= 0)
             {
-                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 1;
+                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
             }
             break;
         case RIGHT:
             playerPos.pos->x++;
-            if(playerPos.pos->x == mainGameMechsRef->getBoardSizeX())
+            if(playerPos.pos->x >= mainGameMechsRef->getBoardSizeX() - 1)
             {
                 playerPos.pos->x = 1;
             }
