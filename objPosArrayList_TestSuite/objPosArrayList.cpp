@@ -79,8 +79,15 @@ objPos objPosArrayList::getTailElement() const
 
 objPos objPosArrayList::getElement(int index) const
 {
-    if(index >= 0 && index < listSize)
+    if(index < 0) // index cannot be negative
     {
-        return aList[index]; // return the element at the specified index  
+        index = 0;
     }
+
+    if(index > listSize)
+    {
+        return aList[listSize];
+    }
+
+    return aList[index]; // return the element at the specified index  
 }

@@ -27,24 +27,16 @@ objPos::~objPos()
 
 objPos::objPos(const objPos &newObj) // copy constructor
 {
-    if(pos != nullptr)
-    {
-        delete pos;
-    }
     pos = new Pos;
     pos->x= newObj.pos->x;
     pos->y= newObj.pos->y;
     symbol = newObj.symbol;
 }
 
-objPos& objPos::operator = (const objPos &newObj)
+objPos& objPos::operator = (const objPos &newObj) // copy assignment operator
 {
-    if(this != nullptr)
+    if(this != &newObj)
     { 
-        if(pos != nullptr) 
-        {
-            delete pos;
-        }
         pos = new Pos;
         pos->x = newObj.pos->x;
         pos->y = newObj.pos->y;
