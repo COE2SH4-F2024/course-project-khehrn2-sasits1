@@ -13,25 +13,37 @@ class Player
 
     // You will include more data members and member functions to complete your design.
 
-    public:
-        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
+public:
+    enum Dir
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        STOP
+    }; // This is the direction state
 
-        Player(GameMechs* thisGMRef); // GameMechs class is passed by reference as pointer into the Player class
-        ~Player(); // destructor, deletes heap members to prevent memory leakage.
+    Player(GameMechs *thisGMRef); // GameMechs class is passed by reference as pointer into the Player class
+    ~Player();                    // destructor, deletes heap members to prevent memory leakage.
 
-        objPos getPlayerPos() const; // Upgrade this in iteration 3.       
-        void updatePlayerDir();
-        void movePlayer();
-        void speedControl();
+    objPos getPlayerPos() const; // Upgrade this in iteration 3. //
 
-        // More methods to be added here
+    // objPos getPlayerHeadPos() const; // updated: uncomment after triple-checking objPosArrayList
+    // objPosArrayList* getPlayerHeadPosList() const;
+    void updatePlayerDir();
+    void movePlayer();
+    void speedControl();
 
-    private:
-        objPos playerPos; // Upgrade this in iteration 3.       
-        enum Dir myDir;
+    // More methods to be added here
 
-        // Need a reference to the Main Game Mechanisms
-        GameMechs* mainGameMechsRef;
+private:
+    objPos playerPos; // Upgrade this in iteration 3.
+
+    // objPosArrayList* playerPosList; // updated: uncomment after triple-checking objPosArrayList
+    enum Dir myDir;
+
+    // Need a reference to the Main Game Mechanisms
+    GameMechs *mainGameMechsRef;
 };
 
 #endif
