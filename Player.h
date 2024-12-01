@@ -4,6 +4,7 @@
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Food.h"
 
 class Player
 {
@@ -23,27 +24,31 @@ public:
         STOP
     }; // This is the direction state
 
-    Player(GameMechs *thisGMRef); // GameMechs class is passed by reference as pointer into the Player class
-    ~Player();                    // destructor, deletes heap members to prevent memory leakage.
+    Player(GameMechs *thisGMRef, Food *thisFood); // GameMechs class is passed by reference as pointer into the Player class
+    ~Player();                                    // destructor, deletes heap members to prevent memory leakage.
 
-    objPos getPlayerPos() const; // Upgrade this in iteration 3. //
+    // objPos getPlayerPos() const; // Upgrade this in iteration 3.
 
-    // objPos getPlayerHeadPos() const; // updated: uncomment after triple-checking objPosArrayList
-    // objPosArrayList* getPlayerHeadPosList() const;
+    objPos getPlayerHeadPos() const; // updated: uncomment after triple-checking objPosArrayList
+    objPosArrayList *getPlayerPosList() const;
     void updatePlayerDir();
-    void movePlayer();
+    void movePlayer(objPos foodPos);
     void speedControl();
 
     // More methods to be added here
 
 private:
-    objPos playerPos; // Upgrade this in iteration 3.
+    // objPos playerPos; // Upgrade this in iteration 3.
 
-    // objPosArrayList* playerPosList; // updated: uncomment after triple-checking objPosArrayList
+    objPosArrayList *playerPosList; // Iteration 3 Update
     enum Dir myDir;
+    // Food *genFood;
 
     // Need a reference to the Main Game Mechanisms
     GameMechs *mainGameMechsRef;
+    Food *mainFoodRef;
+
+    objPos *foodPos;
 };
 
 #endif

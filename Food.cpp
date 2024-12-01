@@ -22,6 +22,7 @@ Food::Food(GameMechs *myGMRef)
 
 Food::~Food()
 {
+    delete food;
     // can be empty
 }
 

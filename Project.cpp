@@ -51,10 +51,10 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myGM = new GameMechs(20, 10);
-    myPlayer = new Player(myGM); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
     myFood = new Food(myGM);
+    myPlayer = new Player(myGM, myFood); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
 
-    myFood->generateFood(myPlayer->getPlayerPos());
+    myFood->generateFood(myPlayer->getPlayerHeadPos());
     // myArrayList = new objPosArrayList(); // will use this in future iterations
 
     // exitFlag = false; don't need this bc GameMechs class alr initializes it to false!
@@ -68,18 +68,12 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();
-    // myPlayer->speedControl();
-
-    objPos playerPos = myPlayer->getPlayerPos();
+    objPos playerPos = myPlayer->getPlayerHeadPos();
     objPos foodPos = myFood->getFoodPos();
 
-    if (playerPos.isPosEqual(&foodPos))
-    {
-        myGM->incrementScore();
-        myFood->generateFood(playerPos);
-    }
+    myPlayer->updatePlayerDir();
+    myPlayer->movePlayer(foodPos);
+    // myPlayer->speedControl();
 
     char input = myGM->getInput();
     // MacUILib_printf("RunLogic()\n");
@@ -90,7 +84,7 @@ void RunLogic(void)
 
     else if (input == 'f')
     {
-        myFood->generateFood(myPlayer->getPlayerPos());
+        myFood->generateFood(myPlayer->getPlayerHeadPos());
     }
 
     else if (input == '/')
@@ -106,14 +100,20 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
     // MacUILib_printf("DrawScreen()\n");
-    objPos playerPos = myPlayer->getPlayerPos();
+
+    objPos playerHeadPos = myPlayer->getPlayerHeadPos();
+
+    objPosArrayList *playerList = myPlayer->getPlayerPosList();
     objPos foodPos = myFood->getFoodPos();
 
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
 
+    // char keyPressed = MacUILib_getChar();
+
     // MacUILib_printf("Checkpoint 1!\n");
-    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerPos.pos->x, playerPos.pos->y, playerPos.symbol);
+    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerHeadPos.pos->x, playerHeadPos.pos->y, playerHeadPos.symbol);
+    // MacUILib_printf("Key pressed, %c\n", keyPressed);
     MacUILib_printf("Food Position: [%d, %d, %c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol);
     MacUILib_printf("Score:[%d]\n", myGM->getScore());
     // j is row, i is column
@@ -128,9 +128,9 @@ void DrawScreen(void)
                 MacUILib_printf("%c", '#');
             }
 
-            else if (i == playerPos.pos->x && j == playerPos.pos->y)
+            else if (i == playerHeadPos.pos->x && j == playerHeadPos.pos->y)
             {
-                MacUILib_printf("%c", playerPos.symbol);
+                MacUILib_printf("%c", playerHeadPos.symbol);
                 // item = 1;
                 // continue;
             }
@@ -141,6 +141,7 @@ void DrawScreen(void)
             }
             else
             {
+
                 MacUILib_printf("%c", ' ');
             }
         }
