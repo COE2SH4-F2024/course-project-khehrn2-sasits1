@@ -33,10 +33,10 @@ objPos::objPos(const objPos &newObj) // copy constructor
     symbol = newObj.symbol;
 }
 
-objPos& objPos::operator = (const objPos &newObj)
+objPos &objPos::operator=(const objPos &newObj)
 {
-    if(this != nullptr)
-    { 
+    if (this != &newObj)
+    {
         pos = new Pos;
         pos->x = newObj.pos->x;
         pos->y = newObj.pos->y;

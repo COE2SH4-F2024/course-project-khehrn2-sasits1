@@ -12,17 +12,19 @@ class Food
 {
 private:
     objPos *food;
-    // GameMechs *mainGameMechsRef; idk if we actually need this
+    GameMechs *mainGameMechsRef;
 
     int xVal;
     int yVal;
+    char input;
 
 public:
     Food();
-    Food(int boardSizeX, int boardSizeY);
+    Food(GameMechs *myGMRef);
     ~Food();
 
     void generateFood(objPos blockoff);
+    void clearInput();
 
     objPos getFoodPos() const;
 };
