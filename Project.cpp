@@ -72,17 +72,20 @@ void RunLogic(void)
     myPlayer->movePlayer();
     // myPlayer->speedControl();
 
+    objPos playerPos = myPlayer->getPlayerPos();
+    objPos foodPos = myFood->getFoodPos();
+
+    if (playerPos.isPosEqual(&foodPos))
+    {
+        myGM->incrementScore();
+        myFood->generateFood(playerPos);
+    }
+
     char input = myGM->getInput();
     // MacUILib_printf("RunLogic()\n");
     if (input == ' ')
     {
         myGM->setExitTrue(); // Exit if space is pressed
-    }
-
-    else if (input == 'i') // debug key? for increment
-    {
-        myGM->incrementScore();
-        // MacUILib_printf("Score is incremented by one. Current score: %d \n", myGM->getScore());
     }
 
     else if (input == 'f')
@@ -112,6 +115,7 @@ void DrawScreen(void)
     // MacUILib_printf("Checkpoint 1!\n");
     MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerPos.pos->x, playerPos.pos->y, playerPos.symbol);
     MacUILib_printf("Food Position: [%d, %d, %c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol);
+    MacUILib_printf("Score:[%d]\n", myGM->getScore());
     // j is row, i is column
     for (int j = 0; j < boardY; j++) // // when j is between index 0 and 8, print "#"when i is between index 0 and 19, print "#"
     {
