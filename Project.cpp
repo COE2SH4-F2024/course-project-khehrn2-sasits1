@@ -52,7 +52,7 @@ void Initialize(void)
 
     myGM = new GameMechs(20, 10);
     myFood = new Food(myGM);
-    myPlayer = new Player(myGM, myFood); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
+    myPlayer = new Player(myGM); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
 
     myFood->generateFood(myPlayer->getPlayerHeadPos());
     // myArrayList = new objPosArrayList(); // will use this in future iterations
@@ -70,6 +70,12 @@ void RunLogic(void)
 {
     objPos playerPos = myPlayer->getPlayerHeadPos();
     objPos foodPos = myFood->getFoodPos();
+
+    if (playerPos.isPosEqual(&foodPos))
+    {
+        myGM->incrementScore();
+        myFood->generateFood(playerPos);
+    }
 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer(foodPos);
@@ -102,12 +108,13 @@ void DrawScreen(void)
     // MacUILib_printf("DrawScreen()\n");
 
     objPos playerHeadPos = myPlayer->getPlayerHeadPos();
-
     objPosArrayList *playerList = myPlayer->getPlayerPosList();
     objPos foodPos = myFood->getFoodPos();
 
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
+
+    int playerSize = playerList->getSize();
 
     // char keyPressed = MacUILib_getChar();
 
@@ -121,7 +128,6 @@ void DrawScreen(void)
     {
         for (int i = 0; i < boardX; i++) // when i is between index 0 and 19, print "#"
         {
-            // int item = 0;
             // MacUILib_printf("Checkpoint 2!\n");
             if (j == 0 || j == boardY - 1 || i == 0 || i == boardX - 1)
             {
@@ -131,8 +137,6 @@ void DrawScreen(void)
             else if (i == playerHeadPos.pos->x && j == playerHeadPos.pos->y)
             {
                 MacUILib_printf("%c", playerHeadPos.symbol);
-                // item = 1;
-                // continue;
             }
 
             else if (j == foodPos.pos->y && i == foodPos.pos->x)
@@ -141,8 +145,22 @@ void DrawScreen(void)
             }
             else
             {
+                bool isSnakeSeg = false;
+                for (int k = 0; k < playerSize; k++)
+                {
+                    objPos thisElement = playerList->getElement(k); // prints out every element from head to tail of the player
+                    if (i == thisElement.pos->x && j == thisElement.pos->y)
+                    {
+                        MacUILib_printf("%c", thisElement.symbol);
+                        isSnakeSeg = true;
+                        break;
+                    }
+                }
 
-                MacUILib_printf("%c", ' ');
+                if (!isSnakeSeg)
+                {
+                    MacUILib_printf("%c", ' ');
+                }
             }
         }
         MacUILib_printf("%c", '\n');

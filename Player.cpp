@@ -1,9 +1,9 @@
 #include "Player.h"
 
-Player::Player(GameMechs *thisGMRef, Food *thisFoodRef)
+Player::Player(GameMechs *thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
-    mainFoodRef = thisFoodRef;
+    // mainFoodRef = thisFoodRef;
     myDir = STOP; // default direction
     // genFood = new Food();
 
@@ -158,18 +158,18 @@ void Player::movePlayer(objPos foodPos)
 
     // need to do the insert new position for head and remove tail thing
 
-    if (headPos.isPosEqual(&foodPos))
-    {
-        playerPosList->insertHead(newHeadPos);
-        mainGameMechsRef->incrementScore();
-        // mainFoodRef->generateFood(newHeadPos);
-    }
+    // if (headPos.isPosEqual(&foodPos))
+    // {
+    //     playerPosList->insertHead(newHeadPos);
+    //     mainGameMechsRef->incrementScore();
+    //     // mainFoodRef->generateFood(newHeadPos);
+    // }
 
-    else
-    {
-        playerPosList->insertHead(newHeadPos);
-        playerPosList->removeTail();
-    }
+    // else
+    // {
+    //     playerPosList->insertHead(newHeadPos);
+    //     playerPosList->removeTail();
+    // }
 }
 
 // void Player::speedControl()
