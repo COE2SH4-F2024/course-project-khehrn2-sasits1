@@ -96,10 +96,7 @@ void DrawScreen(void)
     // char keyPressed = MacUILib_getChar();
 
     // MacUILib_printf("Checkpoint 1!\n");
-    MacUILib_printf("Player [x, y, sym] = [%d, %d, %c]\n", playerHeadPos.pos->x, playerHeadPos.pos->y, playerHeadPos.symbol);
     // MacUILib_printf("Key pressed, %c\n", keyPressed);
-    MacUILib_printf("Food Position: [%d, %d, %c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol);
-    MacUILib_printf("Score:[%d]\n", myGM->getScore());
     // j is row, i is column
     for (int j = 0; j < boardY; j++) // // when j is between index 0 and 8, print "#"when i is between index 0 and 19, print "#"
     {
@@ -143,10 +140,11 @@ void DrawScreen(void)
         MacUILib_printf("%c", '\n');
     }
 
+    MacUILib_printf("Score: %d\n", myGM->getScore());
+
     if (myGM->getLoseFlagStatus())
     {
         MacUILib_printf("YOU LOSE! Snake collided with itself.\n");
-        MacUILib_Delay(3000000);
         myGM->setExitTrue();
     }
 
