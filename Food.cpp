@@ -26,21 +26,35 @@ Food::~Food()
     // can be empty
 }
 
-void Food::generateFood(objPos blockOff)
+void Food::generateFood(objPosArrayList *snakeBody)
 {
 
     // Only need to block off the player position for now
     // Upgrade this in Iteration 3, when single player is replaced with player list
     int xVal, yVal, symbol;
+    bool isElement; // valid random element position
     do
     {
-        xVal = (rand() % (20 - 2)) + 1; // Assuming board size X is 20
-        yVal = (rand() % (10 - 2)) + 1; // Assuming board size Y is 10
-    }
+        xVal = (rand() % (20 - 2)) + 1;   // Assuming board size X is 20
+        yVal = (rand() % (10 - 2)) + 1;   // Assuming board size Y is 10
+        food->setObjPos(xVal, yVal, 'o'); // Set new position for food
 
-    while (xVal == blockOff.pos->x && yVal == blockOff.pos->y);
+        isElement = false;
 
-    food->setObjPos(xVal, yVal, 'o'); // Set new position for food
+        for (int i = 0; i < snakeBody->getSize(); i++)
+        {
+            objPos thisSegment = snakeBody->getElement(i);
+            if (thisSegment.pos->x == xVal && thisSegment.pos->y == yVal)
+            {
+                isElement = true; // overlap of element and snake body!
+                break;
+            }
+            else
+            {
+                isElement = false;
+            }
+        }
+    } while (isElement);
 }
 
 objPos Food::getFoodPos() const

@@ -23,7 +23,7 @@ public:
     Food(GameMechs *myGMRef);
     ~Food();
 
-    void generateFood(objPos blockoff);
+    void generateFood(objPosArrayList *snakeBody);
     void clearInput();
 
     objPos getFoodPos() const;

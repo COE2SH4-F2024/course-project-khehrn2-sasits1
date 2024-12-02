@@ -14,10 +14,9 @@ using namespace std;
 
 Player *myPlayer; // Global pointer meant to instantiate a player object on the heap
 GameMechs *myGM;
-
 Food *myFood;
 
-// objPosArrayList *myArrayList; // will use in future iterations
+objPosArrayList *myArrayList; // will use in future iterations
 
 // bool exitFlag; will not need this bc of GameMechs class!
 
@@ -52,10 +51,10 @@ void Initialize(void)
 
     myGM = new GameMechs(20, 10);
     myFood = new Food(myGM);
-    myPlayer = new Player(myGM); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
+    myPlayer = new Player(myGM, myFood); // created a player object on the heap, myPlayer keeps track of the pointer myGM to the instance of the GameMechs object
+    myArrayList = new objPosArrayList(); // will use this in future iterations
 
-    myFood->generateFood(myPlayer->getPlayerHeadPos());
-    // myArrayList = new objPosArrayList(); // will use this in future iterations
+    myFood->generateFood(myPlayer->getPlayerPosList());
 
     // exitFlag = false; don't need this bc GameMechs class alr initializes it to false!
 }
@@ -63,40 +62,17 @@ void Initialize(void)
 void GetInput(void)
 {
     // MacUILib_printf("GetInput()\n");
-    char input = myGM->getInput();
+    myGM->collectAsyncInput();
 }
 
 void RunLogic(void)
 {
-    objPos playerPos = myPlayer->getPlayerHeadPos();
     objPos foodPos = myFood->getFoodPos();
-
-    if (playerPos.isPosEqual(&foodPos))
-    {
-        myGM->incrementScore();
-        myFood->generateFood(playerPos);
-    }
 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer(foodPos);
     // myPlayer->speedControl();
-
-    char input = myGM->getInput();
     // MacUILib_printf("RunLogic()\n");
-    if (input == ' ')
-    {
-        myGM->setExitTrue(); // Exit if space is pressed
-    }
-
-    else if (input == 'f')
-    {
-        myFood->generateFood(myPlayer->getPlayerHeadPos());
-    }
-
-    else if (input == '/')
-    { // debug key for lose flag
-        myGM->setLoseFlag();
-    }
 
     myGM->clearInput();
     myFood->clearInput();
@@ -105,6 +81,7 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+
     // MacUILib_printf("DrawScreen()\n");
 
     objPos playerHeadPos = myPlayer->getPlayerHeadPos();
@@ -165,6 +142,18 @@ void DrawScreen(void)
         }
         MacUILib_printf("%c", '\n');
     }
+
+    if (myGM->getLoseFlagStatus())
+    {
+        MacUILib_printf("YOU LOSE! Snake collided with itself.\n");
+        MacUILib_Delay(3000000);
+        myGM->setExitTrue();
+    }
+
+    if (myGM->getExitFlagStatus())
+    {
+        MacUILib_printf("Game terminated.\n");
+    }
 }
 
 void LoopDelay(void)
@@ -174,11 +163,9 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    // MacUILib_clearScreen();
+    MacUILib_uninit();
 
     delete myPlayer;
     delete myGM;
     delete myFood;
-
-    MacUILib_uninit();
 }

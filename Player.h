@@ -24,8 +24,8 @@ public:
         STOP
     }; // This is the direction state
 
-    Player(GameMechs *thisGMRef); // GameMechs class is passed by reference as pointer into the Player class
-    ~Player();                    // destructor, deletes heap members to prevent memory leakage.
+    Player(GameMechs *thisGMRef, Food *thisFoodRef); // GameMechs class is passed by reference as pointer into the Player class
+    ~Player();                                       // destructor, deletes heap members to prevent memory leakage.
 
     // objPos getPlayerPos() const; // Upgrade this in iteration 3.
 
@@ -46,7 +46,7 @@ private:
 
     // Need a reference to the Main Game Mechanisms
     GameMechs *mainGameMechsRef;
-    // Food *mainFoodRef;
+    Food *mainFoodRef;
 
     objPos *foodPos;
 };

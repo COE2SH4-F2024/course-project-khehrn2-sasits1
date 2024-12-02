@@ -33,6 +33,7 @@ public:
     void setLoseFlag();
 
     char getInput();
+    void collectAsyncInput();
     void setInput(char this_input);
     void clearInput();
 

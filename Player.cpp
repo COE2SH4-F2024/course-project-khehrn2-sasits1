@@ -1,9 +1,10 @@
 #include "Player.h"
+#include "MacUILib.h"
 
-Player::Player(GameMechs *thisGMRef)
+Player::Player(GameMechs *thisGMRef, Food *thisFoodRef)
 {
     mainGameMechsRef = thisGMRef;
-    // mainFoodRef = thisFoodRef;
+    mainFoodRef = thisFoodRef;
     myDir = STOP; // default direction
     // genFood = new Food();
 
@@ -109,14 +110,10 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer(objPos foodPos)
 {
-    // iteration 3: should get headPos
-
     objPos headPos = getPlayerHeadPos();
 
     int x = headPos.pos->x;
     int y = headPos.pos->y;
-
-    objPos newHeadPos(x, y, '*');
 
     // PPA3 Finite State Machine logic
     switch (myDir)
@@ -158,18 +155,33 @@ void Player::movePlayer(objPos foodPos)
 
     // need to do the insert new position for head and remove tail thing
 
-    // if (headPos.isPosEqual(&foodPos))
-    // {
-    //     playerPosList->insertHead(newHeadPos);
-    //     mainGameMechsRef->incrementScore();
-    //     // mainFoodRef->generateFood(newHeadPos);
-    // }
+    objPos newHeadPos(x, y, '*');
 
-    // else
-    // {
-    //     playerPosList->insertHead(newHeadPos);
-    //     playerPosList->removeTail();
-    // }
+    if (playerPosList->getSize() != 1)
+    {
+        for (int i = 0; i < playerPosList->getSize(); i++)
+        {
+            objPos thisElement = playerPosList->getElement(i);
+
+            if (newHeadPos.isPosEqual(&thisElement))
+            {
+                mainGameMechsRef->setLoseFlag();
+            }
+        }
+    }
+
+    if (headPos.isPosEqual(&foodPos))
+    {
+        playerPosList->insertHead(newHeadPos);
+        mainGameMechsRef->incrementScore();
+        mainFoodRef->generateFood(playerPosList);
+    }
+
+    else
+    {
+        playerPosList->insertHead(newHeadPos);
+        playerPosList->removeTail();
+    }
 }
 
 // void Player::speedControl()

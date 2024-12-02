@@ -45,12 +45,21 @@ bool GameMechs::getLoseFlagStatus() const
 
 char GameMechs::getInput()
 {
-    if(MacUILib_hasChar())
+
+    return input;
+}
+
+void GameMechs::collectAsyncInput()
+{
+    if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
     }
 
-    return input;
+    if (input == ' ')
+    {
+        exitFlag = true; // Exit if space is pressed
+    }
 }
 
 int GameMechs::getScore() const
