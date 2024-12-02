@@ -21,7 +21,7 @@ void tearDown(bool result);
 // ******************* //
 // Turn this true once you have implemented the Minimum Four Special Member Functions!!
 int testReady = true;
-// ******************* //
+// ******************* // 
 
 
 
@@ -413,6 +413,88 @@ void testRemoveTail_5Element()
 	tearDown(result);
 }
 
+// Test Case 5c - negative out of bounds access
+// void testNegativeOutOfBoundsAccess()
+// {
+// 	printf("\n=== testNegativeOutOfBoundsAccess ===\n");
+// 	bool result = true; // true;
+
+// 	objPos currentPos;
+// 	objPos bodyPos(2, 5, 'a');  
+
+// 	// Insert 1 body element
+// 	objPosArrayList thisList;
+// 	thisList.insertTail(bodyPos);
+
+// 	int expectedSize = 1;
+// 	int actualSize = thisList.getSize();
+		
+// 	// Confirm the list size is now 1
+// 	result &= assert_equal(expectedSize, actualSize);
+
+// 	bool expectedCheck = true;
+// 	bool actualCheck;
+
+// 	result &= assert_equal(expectedCheck, actualCheck);
+
+// 	// Next, check the body elements at index -1.
+//  expectedCheck = false;
+// 	try
+// 	{
+// 		currentPos = thisList.getElement(-1);
+// 		result &= false;
+//  }
+// catch(const std::out_of_range& e)
+// {
+// 		result &= true;
+// } 
+// result &= assert_equal(expectedCheck, actualCheck);	
+
+// 	// The destructor will be called automatically for stack-allocated objects
+
+// 	tearDown(result);
+// }
+
+// // Test Case 5d - out of bounds access
+// void testOutOfBoundsAccess()
+// {
+// 	printf("\n=== testOutOfBoundsAccess ===\n");
+// 	bool result = true; // true;
+
+// 	objPos currentPos;
+// 	objPos bodyPos(2, 5, 'a');  
+
+// 	// Insert 1 body element
+// 	objPosArrayList thisList;
+// 	thisList.insertTail(bodyPos);
+
+// 	int expectedSize = 1;
+// 	int actualSize = thisList.getSize();
+		
+// 	// Confirm the list size is now 1
+// 	result &= assert_equal(expectedSize, actualSize);
+
+// 	bool expectedCheck = true;
+// 	bool actualCheck;
+
+// 	result &= assert_equal(expectedCheck, actualCheck);
+
+//  	expectedCheck = false;
+// 	try
+// 	{
+// 		currentPos = thisList.getElement(actualSize);
+// 		result &= false;
+//  	}
+// 	catch(const std::out_of_range& e)
+// 	{
+// 			result &=  true;
+// 	} 
+// 	result &= assert_equal(expectedCheck, actualCheck);	
+
+// 		// The destructor will be called automatically for stack-allocated objects
+
+// 	tearDown(result);
+// }
 
 
 
@@ -432,6 +514,9 @@ void testRemoveTail_5Element()
 
 		testRemoveTail_1Element();
 		testRemoveTail_5Element();
+
+		// testNegativeOutOfBoundsAccess();
+		// testOutOfBoundsAccess();
 		
 		return (successCount == totalAssertions);
 	}

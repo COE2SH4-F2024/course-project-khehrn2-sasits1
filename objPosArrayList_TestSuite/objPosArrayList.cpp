@@ -1,5 +1,5 @@
 #include "objPosArrayList.h"
-
+#include <stdexcept>
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
 
@@ -88,6 +88,5 @@ objPos objPosArrayList::getElement(int index) const
     {
         return aList[listSize];
     }
-
     return aList[index]; // return the element at the specified index  
 }
