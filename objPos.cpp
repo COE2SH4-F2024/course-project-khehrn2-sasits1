@@ -23,6 +23,7 @@ objPos::objPos(int xPos, int yPos, char sym)
 objPos::~objPos()
 {
     delete pos;
+    
 }
 
 objPos::objPos(const objPos &newObj) // copy constructor
@@ -37,6 +38,7 @@ objPos &objPos::operator=(const objPos &newObj)
 {
     if (this != &newObj)
     {
+        delete pos;
         pos = new Pos;
         pos->x = newObj.pos->x;
         pos->y = newObj.pos->y;
